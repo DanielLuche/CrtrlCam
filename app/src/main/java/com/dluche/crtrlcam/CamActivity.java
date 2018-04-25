@@ -2,6 +2,7 @@ package com.dluche.crtrlcam;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -10,8 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.dluche.crtrlcam.ctrl.CtrlCamera;
+import com.dluche.crtrlcam.util.Constants;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -106,5 +110,17 @@ public class CamActivity extends AppCompatActivity {
         CtrlCamera.sendBRCtrlCam(context,ctrlID);
         //
         finish();
+    }
+    //
+    private void generateThumbnail(Intent data) throws IOException {
+        File thumbnailFile = new File(path +Constants.THUMBNAIL_PATH + "/" + Constants.PREFIX_THUMBNAIL + newImage.getName());
+        //
+        //Bitmap thumbnail = BitmapFactory.decodeFile(newImage.getAbsolutePath());
+        ExifInterface exifOrigin = new ExifInterface(newImage.getAbsolutePath());
+        //
+        FileOutputStream fileOutputStream = new FileOutputStream(thumbnailFile);
+        fileOutputStream.write(exifOrigin.getThumbnail());
+        fileOutputStream.flush();
+        fileOutputStream.close();
     }
 }

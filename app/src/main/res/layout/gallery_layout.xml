@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/gallery_vp_pictures"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v4.view.ViewPager>
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/gallery_fab_new_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:src="@drawable/ic_add_a_photo_black_24dp"
+            android:tint="@android:color/white"
+            android:padding="10dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:foregroundGravity="center"
+            android:layout_margin="10dp"
+            />
+
+
+
+    </FrameLayout>
+</LinearLayout>

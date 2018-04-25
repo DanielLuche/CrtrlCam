@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
@@ -16,7 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dluche.crtrlcam.CamActivity;
+import com.dluche.crtrlcam.GalleryAct;
 import com.dluche.crtrlcam.R;
+import com.dluche.crtrlcam.util.Constants;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -96,8 +97,7 @@ public class CtrlCamera extends LinearLayout implements View.OnClickListener {
         this.context = context;
         this.pictureList = new ArrayList<>();
         this.pictureLimit = 5;
-        this.defaultPath = Environment
-                .getExternalStorageDirectory() + "/testCameraCtrlDir";
+        this.defaultPath = Constants.DEFAULT_PATH;
         this.newImage = null;
         this.selfIcon = -1;
         //this.prefix = "123";
@@ -132,11 +132,22 @@ public class CtrlCamera extends LinearLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        callCamActivity();
+        //callCamActivity();
+        callGalleryActivity();
     }
 
     private void callCamActivity() {
         Intent mIntent = new Intent(context,CamActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(DEFAULT_PATH,defaultPath);
+        bundle.putString(PICTURE_PREIX,prefix);
+        bundle.putString(CTRL_ID, String.valueOf(getId()));
+        mIntent.putExtras(bundle);
+        context.startActivity(mIntent);
+    }
+
+    private void callGalleryActivity() {
+        Intent mIntent = new Intent(context,GalleryAct.class);
         Bundle bundle = new Bundle();
         bundle.putString(DEFAULT_PATH,defaultPath);
         bundle.putString(PICTURE_PREIX,prefix);
@@ -163,6 +174,31 @@ public class CtrlCamera extends LinearLayout implements View.OnClickListener {
         }
         //
         return 0;
+    }
+
+    public static ArrayList<String> getPictureListByPrefix(final String pic_prefix){
+        ArrayList<String> picList = new ArrayList<>();
+        //
+        File fileList = new File(Constants.DEFAULT_PATH);
+        File[] files = fileList.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String filename) {
+                if (filename.startsWith(pic_prefix)) {
+                    return true;
+                }
+                return false;
+            }
+        });
+        //
+        if (files != null) {
+            Arrays.sort(files);
+            for (int i = 0; i < files.length; i++) {
+                String aux = files[i].getAbsolutePath();
+                picList.add(aux);
+            }
+        }
+        //
+        return picList;
     }
 
     private void updateIconState(){
