@@ -108,6 +108,23 @@ public class GalleryAct extends AppCompatActivity {
                 callCamActivity();
             }
         });
+        //
+        mAdapter2.setOnPictureClickListner(new GalleryThumbPagerAdapter.setOnPictureClickListner() {
+            @Override
+            public void OnPictureClick(int position) {
+                callGalleryViewer(position);
+            }
+        });
+    }
+
+    private void callGalleryViewer(int currentItem) {
+        ArrayList<String> strings = CtrlCamera.getPictureListByPrefix(prefix);
+        //
+        Intent mIntent = new Intent(context, GalleryViewer.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(CtrlCamera.DEFAULT_PATH, strings.get(currentItem) != null ? strings.get(currentItem) :"");
+        mIntent.putExtras(bundle);
+        context.startActivity(mIntent);
     }
 
     private void callCamActivity() {
@@ -126,6 +143,7 @@ public class GalleryAct extends AppCompatActivity {
         //
         if(!firstResume) {
             //buildAdapter();
+            initActions();
             buildAdapterThumb();
             vpPicture.setCurrentItem(mAdapter2.getCount() -1);
         }

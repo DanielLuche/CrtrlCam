@@ -26,6 +26,8 @@
         <activity
             android:name=".GalleryAct"
             android:label="@string/title_activity_gallery"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".GalleryViewer"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

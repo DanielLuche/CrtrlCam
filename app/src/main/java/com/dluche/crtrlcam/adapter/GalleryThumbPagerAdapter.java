@@ -17,6 +17,11 @@ public class GalleryThumbPagerAdapter extends PagerAdapter {
     private Context context;
     private ArrayList<byte[]> source;
     private int resouce;
+    private setOnPictureClickListner OnPictureClickListner;
+
+    public interface setOnPictureClickListner{
+        void OnPictureClick(int position);
+    }
 
     public GalleryThumbPagerAdapter(Context context, ArrayList<byte[]> source) {
         this.context = context;
@@ -24,6 +29,9 @@ public class GalleryThumbPagerAdapter extends PagerAdapter {
         this.resouce = R.layout.gallery_cell;
     }
 
+    public void setOnPictureClickListner(setOnPictureClickListner onPictureClickListner) {
+        OnPictureClickListner = onPictureClickListner;
+    }
 
     @Override
     public int getCount() {
@@ -36,11 +44,11 @@ public class GalleryThumbPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
         //return super.instantiateItem(container, position);
         //Bitmap pictue = BitmapFactory.decodeFile(source.get(position));
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(resouce,container,false);
+        final View view = inflater.inflate(resouce,container,false);
         //
         ImageView iv_main = view.findViewById(R.id.gallery_cell_iv_main);
         if(source.get(position) != null ) {
@@ -55,6 +63,15 @@ public class GalleryThumbPagerAdapter extends PagerAdapter {
             iv_main.setImageDrawable(context.getDrawable(R.drawable.ic_launcher_background));
         }
         container.addView(view);
+        //
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              if( OnPictureClickListner != null){
+                  OnPictureClickListner.OnPictureClick(position);
+              }
+            }
+        });
         //
         return view;
         /*LinearLayout ll = new LinearLayout(context);
