@@ -33,6 +33,14 @@ public class GalleryThumbPagerAdapter extends PagerAdapter {
         OnPictureClickListner = onPictureClickListner;
     }
 
+    public ArrayList<byte[]> getSource() {
+        return source;
+    }
+
+    public void setSource(ArrayList<byte[]> source) {
+        this.source = source;
+    }
+
     @Override
     public int getCount() {
         return source.size();
