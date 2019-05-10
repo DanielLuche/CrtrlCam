@@ -138,6 +138,7 @@ public class CtrlCamera extends LinearLayout implements View.OnClickListener {
 
     private void callCamActivity() {
         Intent mIntent = new Intent(context,CamActivity.class);
+        mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle bundle = new Bundle();
         bundle.putString(DEFAULT_PATH,defaultPath);
         bundle.putString(PICTURE_PREIX,prefix);
@@ -148,6 +149,7 @@ public class CtrlCamera extends LinearLayout implements View.OnClickListener {
 
     private void callGalleryActivity() {
         Intent mIntent = new Intent(context,GalleryAct.class);
+        mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle bundle = new Bundle();
         bundle.putString(DEFAULT_PATH,defaultPath);
         bundle.putString(PICTURE_PREIX,prefix);

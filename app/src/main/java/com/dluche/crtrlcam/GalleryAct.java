@@ -136,6 +136,7 @@ public class GalleryAct extends AppCompatActivity {
         positionReturned = currentItem;
         //
         Intent mIntent = new Intent(context, GalleryViewer.class);
+        mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle bundle = new Bundle();
         bundle.putString(CtrlCamera.DEFAULT_PATH, strings.get(currentItem) != null ? strings.get(currentItem) :"");
         bundle.putInt(ADAPTER_POSITION, currentItem);
@@ -146,6 +147,7 @@ public class GalleryAct extends AppCompatActivity {
     private void callCamActivity() {
         lastRequisition = CamActivity.class.getSimpleName();
         Intent mIntent = new Intent(context, CamActivity.class);
+        mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle bundle = new Bundle();
         bundle.putString(CtrlCamera.DEFAULT_PATH, path);
         bundle.putString(CtrlCamera.PICTURE_PREIX, prefix);
